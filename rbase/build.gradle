@@ -1,0 +1,78 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    buildToolsVersion '26.0.2'
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    def dependencies = rootProject.ext.dependencies
+    compile dependencies.supportAppCompat
+    compile dependencies.supportDesign
+    compile dependencies.supportRecyclerview
+    compile dependencies.supportCardView
+
+    compile dependencies.rxJava2
+    compile dependencies.rxAndroid2
+
+    //bmob okio依赖冲突
+    compile dependencies.retrofit
+    compile dependencies.retrofitGsonConverter
+    compile dependencies.retrofitRxjava2Adapter
+
+    compile dependencies.gson
+    compile dependencies.glide
+    compile dependencies.bnb
+    compile dependencies.bravh
+//    compile dependencies.greenDao
+    compile dependencies.greenDaoUpgradeHelper
+
+    compile dependencies.eventbus
+
+    debugCompile dependencies.leakCanaryDebug
+    releaseCompile dependencies.leakCanaryRelease
+
+    compile dependencies.conconstraintLayout
+    compile dependencies.flexboxLayout
+    compile dependencies.photoView
+
+    compile dependencies.stetho
+    compile dependencies.stethoOkhttp3
+    testCompile 'junit:junit:4.12'
+
+//    compile 'com.jakewharton:butterknife:8.7.0'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
+}
